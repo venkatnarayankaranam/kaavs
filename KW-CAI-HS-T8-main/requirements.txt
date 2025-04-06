@@ -1,0 +1,6 @@
+streamlit
+torch
+Pillow
+textblob
+transformers
+google-generativeai

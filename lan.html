@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scene Understanding Project</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            color: #2c3e50;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #3498db;
+            color: #fff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+        }
+
+        /* Navigation */
+        header {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #3498db;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        /* Page Styles */
+        .page-section {
+            padding: 120px 0 80px;
+            min-height: 100vh;
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        /* Home Page */
+        #home {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://via.placeholder.com/1920x1080') center/cover no-repeat;
+            color: #fff;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .home-content {
+            max-width: 800px;
+        }
+
+        .home-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .home-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        /* About Page */
+        .team-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .team-member {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+
+        .team-member img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+        }
+
+        .team-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .team-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .team-info p {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: #3498db;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #2980b9;
+        }
+
+        /* Contact Page */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 50px;
+            align-items: center;
+        }
+
+        .contact-info {
+            color: #2c3e50;
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .contact-info p {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .contact-form {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .form-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            display: none;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+
+        /* Project Page */
+        .project-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 40px;
+            align-items: center;
+        }
+
+        .project-info {
+            color: #2c3e50;
+        }
+
+        .project-info h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .project-info p {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .upload-container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .upload-area {
+            border: 2px dashed #3498db;
+            padding: 30px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .upload-area:hover {
+            background: #f1f9ff;
+        }
+
+        .upload-area p {
+            margin: 10px 0;
+            color: #7f8c8d;
+        }
+
+        .upload-area i {
+            font-size: 3rem;
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+
+        #preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            margin: 20px auto;
+            display: none;
+            border-radius: 5px;
+        }
+
+        .result-container {
+            margin-top: 40px;
+            display: none;
+            background: #f1f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+        }
+
+        .result-container h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .story-text {
+            line-height: 1.8;
+            white-space: pre-line;
+        }
+
+        .loader {
+            display: none;
+            margin: 20px auto;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                right: 0;
+                height: calc(100vh - 80px);
+                top: 80px;
+                background: #2c3e50;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-around;
+                width: 50%;
+                transform: translateX(100%);
+                transition: transform 0.5s ease-in;
+                z-index: 1;
+            }
+
+            .nav-links li {
+                margin: 0;
+            }
+
+            .nav-active {
+                transform: translateX(0%);
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .home-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .contact-container,
+            .project-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Scene Understanding</div>
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link" data-page="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="about">About Us</a></li>
+                    <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
+                    <li><a href="#" class="nav-link" data-page="project">Project</a></li>
+                </ul>
+                <div class="hamburger">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <section id="home" class="page-section active">
+        <div class="container">
+            <div class="home-content">
+                <h1>Scene Understanding Project</h1>
+                <p>Our innovative project leverages advanced AI to understand complex visual scenes and generate human-like descriptions. By analyzing patterns, objects, and spatial relationships, our system translates visual data into coherent narratives. This technology bridges the gap between computer vision and natural language processing, enabling machines to interpret and communicate the rich content of images in a meaningful way.</p>
+                <a href="#" class="btn nav-link" data-page="project">Try Our Project</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Page -->
+    <section id="about" class="page-section">
+        <div class="container">
+            <h2 class="section-title">Our Team</h2>
+            <div class="team-container">
+                <div class="team-member">
+                    <img src="https://via.placeholder.com/300" alt="Team Member 1">
+                    <div class="team-info">
+                        <h3>Alex Johnson</h3>
+                        <p>Project Lead & ML Engineer</p>
+                        <p>Responsible for project architecture and machine learning model development.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="https://via.placeholder.com/300" alt="Team Member 2">
+                    <div class="team-info">
+                        <h3>Sarah Williams</h3>
+                        <p>Computer Vision Specialist</p>
+                        <p>Develops algorithms for object detection and scene analysis.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="https://via.placeholder.com/300" alt="Team Member 3">
+                    <div class="team-info">
+                        <h3>Michael Chen</h3>
+                        <p>NLP Expert</p>
+                        <p>Works on natural language generation and story creation algorithms.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="https://via.placeholder.com/300" alt="Team Member 4">
+                    <div class="team-info">
+                        <h3>Emily Rodriguez</h3>
+                        <p>Frontend Developer</p>
+                        <p>Creates intuitive user interfaces and responsive web design.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Page -->
+    <section id="contact" class="page-section">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    <p>Have questions about our project or interested in collaboration? Reach out to our team using the contact form, and we'll get back to you as soon as possible.</p>
+                    <p>You can also find us on campus at the Computer Science Department, Building B, Room 305.</p>
+                    <p><i class="fas fa-envelope"></i> project@university.edu</p>
+                    <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" class="form-control" placeholder="Your Phone Number">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" class="form-control" rows="5" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                        <div id="form-message" class="form-message"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Page -->
+    <section id="project" class="page-section">
+        <div class="container">
+            <h2 class="section-title">Scene Understanding Project</h2>
+            <div class="project-container">
+                <div class="project-info">
+                    <h2>Image to Story Generator</h2>
+                    <p>Our AI-powered system can analyze an image and generate a short story based on what it sees. The system identifies objects, their relationships, the setting, and the overall mood of the scene.</p>
+                    <p>Simply upload an image, and our algorithm will process it and create a narrative that captures the essence of the visual scene.</p>
+                    <p>This technology has applications in education, entertainment, accessibility for the visually impaired, and much more.</p>
+                </div>
+                <div class="upload-container">
+                    <h3>Upload an Image</h3>
+                    <div class="upload-area" id="upload-area">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Drag & drop an image here or click to browse</p>
+                        <p class="small">Supported formats: JPG, PNG, JPEG (Max size: 5MB)</p>
+                    </div>
+                    <input type="file" id="file-input" accept="image/*" style="display: none;">
+                    <img id="preview-image" src="#" alt="Preview">
+                    <button id="generate-btn" class="btn" disabled>Generate Story</button>
+                    <div class="loader" id="loader"></div>
+                    <div class="result-container" id="result-container">
+                        <h3>Generated Story:</h3>
+                        <div class="story-text" id="story-text"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Navigation handling
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pageSections = document.querySelectorAll('.page-section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const pageId = this.getAttribute('data-page');
+                
+                // Hide all pages
+                pageSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show selected page
+                document.getElementById(pageId).classList.add('active');
+                
+                // Close mobile menu if open
+                document.querySelector('.nav-links').classList.remove('nav-active');
+            });
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinksContainer = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinksContainer.classList.toggle('nav-active');
+        });
+
+        // Contact form handling
+        const contactForm = document.getElementById('contactForm');
+        const formMessage = document.getElementById('form-message');
+
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+            
+            // In a real application, you would send this data to a server
+            // For demonstration, we'll simulate a successful submission
+            
+            // Show loading state
+            contactForm.querySelector('.btn').disabled = true;
+            contactForm.querySelector('.btn').textContent = 'Sending...';
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Show success message
+                formMessage.textContent = 'Message sent successfully! We will get back to you soon.';
+                formMessage.classList.add('success');
+                
+                // Reset form
+                contactForm.reset();
+                contactForm.querySelector('.btn').disabled = false;
+                contactForm.querySelector('.btn').textContent = 'Send Message';
+                
+                // Clear message after 5 seconds
+                setTimeout(() => {
+                    formMessage.textContent = '';
+                    formMessage.classList.remove('success');
+                }, 5000);
+            }, 1500);
+        });
+
+        // Image upload and processing
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+        const previewImage = document.getElementById('preview-image');
+        const generateBtn = document.getElementById('generate-btn');
+        const loader = document.getElementById('loader');
+        const resultContainer = document.getElementById('result-container');
+        const storyText = document.getElementById('story-text');
+
+        // Trigger file input on upload area click
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // Handle drag and drop
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.background = '#f1f9ff';
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.background = 'transparent';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.background = 'transparent';
+            
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                handleFileSelect();
+            }
+        });
+
+        // Handle file select
+        fileInput.addEventListener('change', handleFileSelect);
+
+        function handleFileSelect() {
+            const file = fileInput.files[0];
+            
+            if (file) {
+                // Validate file type and size
+                const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                const maxSize = 5 * 1024 * 1024; // 5MB
+                
+                if (!validTypes.includes(file.type)) {
+                    alert('Please select a valid image file (JPG, JPEG, PNG)');
+                    return;
+                }
+                
+                if (file.size > maxSize) {
+                    alert('File size exceeds 5MB limit');
+                    return;
+                }
+                
+                // Preview image
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                    generateBtn.disabled = false;
+                };
+                reader.readAsDataURL(file);
+                
+                // Hide previous results
+                resultContainer.style.display = 'none';
+            }
+        }
+
+        // Handle generate button click
+        generateBtn.addEventListener('click', generateStory);
+
+        function generateStory() {
+            // Show loader
+            loader.style.display = 'block';
+            generateBtn.disabled = true;
+            
+            // Hide previous results
+            resultContainer.style.display = 'none';
+            
+            // In a real application, you would send the image to your backend
+            // For demonstration, we'll simulate API response
+            
+            // Simulate processing time
+            setTimeout(() => {
+                // Hide loader
+                loader.style.display = 'none';
+                
+                // Sample stories based on common image types
+                const stories = [
+                    "As the sun dipped below the horizon, painting the sky in hues of orange and pink, the old lighthouse stood tall against the churning waves. For over a century, it had guided sailors safely to shore, its beam cutting through the darkest of nights. Tonight, as the first stars began to appear, it seemed to stand as a silent witness to the endless cycle of time, a reminder of humanity's resilience against the relentless force of nature.",
+                    
+                    "The bustling city street came alive as evening approached. Neon signs flickered to life, casting colorful reflections on the rain-slicked pavement. People hurried past, umbrellas bobbing like black mushrooms in a forest of concrete and glass. Among them, a street musician played a melancholic tune on his saxophone, the notes floating above the urban symphony of car horns and distant conversations.",
+                    
+                    "In the quiet garden, time seemed to stand still. Butterflies danced among the wildflowers, their delicate wings catching the golden afternoon light. A gentle breeze carried the sweet scent of roses and freshly cut grass. Here, in this small patch of paradise, the worries of the world faded away, replaced by the simple joy of existing in perfect harmony with nature.",
+                    
+                    "The abandoned cabin in the woods held countless stories within its weathered walls. Generations had come and gone, leaving behind whispers of laughter, tears, and dreams. Now, as sunlight filtered through the dusty windows, nature was slowly reclaiming its territory. Vines crept through cracks, and a family of birds had made their home in the rafters, their songs bringing life back to the forgotten structure."
+                ];
+                
+                // Randomly select a story
+                const randomStory = stories[Math.floor(Math.random() * stories.length)];
+                
+                // Display result
+                storyText.textContent = randomStory;
+                resultContainer.style.display = 'block';
+                generateBtn.disabled = false;
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Showcase</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            margin-left: 50px;
+        }
+
+        .nav-links {
+            display: flex;
+            margin-right: 50px;
+        }
+
+        .nav-links li {
+            list-style: none;
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #4CAF50;
+        }
+
+        /* Page Styles */
+        .page {
+            min-height: 100vh;
+            padding-top: 80px;
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Home Page */
+        #home {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
+            color: #fff;
+            position: relative;
+        }
+
+        .sidebar {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 100px 20px;
+        }
+
+        .sidebar h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 15px;
+        }
+
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            color: #4CAF50;
+        }
+
+        .home-content {
+            padding: 50px;
+            margin-right: 300px;
+        }
+
+        .home-content h1 {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .home-content h3 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #4CAF50;
+        }
+
+        .home-content p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            max-width: 800px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        /* About Page */
+        #about {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
+            color: #fff;
+        }
+
+        .about-content {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 50px;
+            border-radius: 10px;
+        }
+
+        .about-content h1 {
+            font-size: 40px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .team-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+
+        .team-member {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        .team-member h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .team-member p {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .technologies {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .technologies h2 {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .tech-icons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .tech-icon {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        .tech-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Contact Page */
+        #contact {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
+            color: #fff;
+        }
+
+        .contact-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 80px);
+        }
+
+        .contact-form {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .contact-form h1 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .form-control:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-content h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .modal-content p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .close-modal {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Project Page */
+        #project {
+            background-color: #f0f0f0;
+        }
+
+        .project-content {
+            padding: 50px 0;
+        }
+
+        .project-content h1 {
+            font-size: 40px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        .project-content p {
+            font-size: 18px;
+            margin-bottom: 40px;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #666;
+        }
+
+        .project-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .project-item {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-item-content {
+            padding: 20px;
+        }
+
+        .project-item h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .project-item p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .project-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .feature-tag {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .home-content {
+                margin-right: 0;
+                padding: 30px;
+            }
+
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                padding: 30px;
+            }
+
+            .team-member {
+                width: 45%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 10px 0;
+            }
+
+            .logo {
+                margin-left: 0;
+                margin-bottom: 15px;
+            }
+
+            .nav-links {
+                margin-right: 0;
+            }
+
+            .home-content h1 {
+                font-size: 36px;
+            }
+
+            .team-member {
+                width: 100%;
+            }
+
+            .tech-icons {
+                gap: 15px;
+            }
+
+            .tech-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#" class="logo" onclick="showPage('home')">Project Showcase</a>
+        <ul class="nav-links">
+            <li><a href="#" onclick="showPage('home')">Home</a></li>
+            <li><a href="#" onclick="showPage('about')">About</a></li>
+            <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+            <li><a href="#" onclick="showPage('project')">Project</a></li>
+        </ul>
+    </nav>
+
+    <!-- Home Page -->
+    <section id="home" class="page active">
+        <div class="sidebar">
+            <h2>Quick Links</h2>
+            <ul>
+                <li><a href="#" onclick="showPage('about')">Our Team</a></li>
+                <li><a href="#" onclick="showPage('about')">Technologies</a></li>
+                <li><a href="#" onclick="showPage('project')">Project Demo</a></li>
+                <li><a href="#" onclick="showPage('project')">Features</a></li>
+                <li><a href="#" onclick="showPage('contact')">Get in Touch</a></li>
+            </ul>
+        </div>
+        <div class="home-content">
+            <h1>Welcome to Our Project</h1>
+            <h3>Innovative Solutions for Modern Challenges</h3>
+            <p>Our project is focused on developing cutting-edge technology that addresses real-world problems. We've combined expertise in various fields to create a solution that is both efficient and user-friendly.</p>
+            <p>The core features of our project include real-time data analysis, interactive user interfaces, and adaptive learning algorithms. These components work together to provide a seamless experience for users across different platforms.</p>
+            <p>Our team has spent countless hours researching, designing, and testing this project to ensure it meets the highest standards of quality and performance. We believe in creating technology that not only solves problems but also enhances the way people interact with digital systems.</p>
+            <a href="#" class="btn" onclick="showPage('project')">Explore Project</a>
+        </div>
+    </section>
+
+    <!-- About Page -->
+    <section id="about" class="page">
+        <div class="container">
+            <div class="about-content">
+                <h1>About Our Team</h1>
+                <p>We are a diverse group of professionals with expertise in various fields of technology and design. Our team's combined experience and passion drive us to create innovative solutions that make a difference.</p>
+                
+                <div class="team-section">
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/150" alt="Team Member">
+                        <h3>John Doe</h3>
+                        <p>Lead Developer</p>
+                        <p>Responsible for overall architecture and backend development. John has over 10 years of experience in software development.</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/150" alt="Team Member">
+                        <h3>Jane Smith</h3>
+                        <p>UX/UI Designer</p>
+                        <p>Creates intuitive user interfaces and ensures an excellent user experience. Jane specializes in human-centered design principles.</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/150" alt="Team Member">
+                        <h3>Mike Johnson</h3>
+                        <p>Frontend Developer</p>
+                        <p>Builds responsive and interactive user interfaces. Mike excels at creating clean and maintainable code.</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/150" alt="Team Member">
+                        <h3>Sarah Williams</h3>
+                        <p>Data Scientist</p>
+                        <p>Develops and implements complex algorithms for data analysis. Sarah has a strong background in machine learning.</p>
+                    </div>
+                </div>
+
+                <div class="technologies">
+                    <h2>Technologies We Use</h2>
+                    <p>Our project leverages cutting-edge technologies to deliver a seamless and efficient solution:</p>
+                    <div class="tech-icons">
+                        <div class="tech-icon">HTML</div>
+                        <div class="tech-icon">CSS</div>
+                        <div class="tech-icon">JS</div>
+                        <div class="tech-icon">React</div>
+                        <div class="tech-icon">Node</div>
+                        <div class="tech-icon">Python</div>
+                        <div class="tech-icon">AI</div>
+                        <div class="tech-icon">Cloud</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Page -->
+    <section id="contact" class="page">
+        <div class="container">
+            <div class="contact-content">
+                <form class="contact-form" id="contactForm">
+                    <h1>Get In Touch</h1>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" class="form-control" id="phone" placeholder="Your Phone Number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea class="form-control" id="message" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Submit</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for form submission -->
+    <div class="modal" id="thankYouModal">
+        <div class="modal-content">
+            <h2>Thank You!</h2>
+            <p>Your message has been received. We will get back to you shortly.</p>
+            <button class="close-modal" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Project Page -->
+    <section id="project" class="page">
+        <div class="container">
+            <div class="project-content">
+                <h1>Our Project</h1>
+                <p>Discover the innovative solution we've developed to address modern challenges. Our project combines advanced technology with user-friendly design to create a seamless experience.</p>
+                
+                <div class="project-gallery">
+                    <div class="project-item">
+                        <img src="https://via.placeholder.com/300x200" alt="Project Feature">
+                        <div class="project-item-content">
+                            <h3>Real-time Analytics</h3>
+                            <p>Our platform provides instant insights through powerful analytics tools, helping users make data-driven decisions.</p>
+                            <div class="project-features">
+                                <span class="feature-tag">Data Visualization</span>
+                                <span class="feature-tag">Real-time</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-item">
+                        <img src="https://via.placeholder.com/300x200" alt="Project Feature">
+                        <div class="project-item-content">
+                            <h3>Interactive Dashboard</h3>
+                            <p>A customizable dashboard lets users monitor key metrics and performance indicators at a glance.</p>
+                            <div class="project-features">
+                                <span class="feature-tag">UX Design</span>
+                                <span class="feature-tag">Customizable</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-item">
+                        <img src="https://via.placeholder.com/300x200" alt="Project Feature">
+                        <div class="project-item-content">
+                            <h3>Secure Communication</h3>
+                            <p>End-to-end encryption ensures that all communications remain private and secure.</p>
+                            <div class="project-features">
+                                <span class="feature-tag">Security</span>
+                                <span class="feature-tag">Encryption</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-item">
+                        <img src="https://via.placeholder.com/300x200" alt="Project Feature">
+                        <div class="project-item-content">
+                            <h3>Mobile Integration</h3>
+                            <p>Our responsive design ensures a seamless experience across all devices, from desktops to smartphones.</p>
+                            <div class="project-features">
+                                <span class="feature-tag">Responsive</span>
+                                <span class="feature-tag">Cross-platform</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Show page function
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+            
+            // In a real application, you would send this data to a server
+            // For demonstration, we'll log it to console and show the modal
+            console.log({
+                name: name,
+                email: email,
+                phone: phone,
+                message: message
+            });
+            
+            // Show thank you modal
+            document.getElementById('thankYouModal').style.display = 'flex';
+            
+            // Reset form
+            this.reset();
+        });
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('thankYouModal').style.display = 'none';
+        }
+
+        // Close modal if clicked outside
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('thankYouModal');
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
